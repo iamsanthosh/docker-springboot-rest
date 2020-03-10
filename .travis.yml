@@ -1,10 +1,11 @@
 sudo: required
 services:
- - dockeer
+ - docker
  
 before_install:
  - docker build -t iamsanthosh/docker-springboot-rest -f Dockerfile.dev .
  
 script:
  - docker run iamsanthosh/docker-springboot-rest npm test -- --coverage
+
  
