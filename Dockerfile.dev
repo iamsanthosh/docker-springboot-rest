@@ -1,7 +1,14 @@
 # Start with a base image containing Java runtime
-FROM openjdk:8-jdk-alpine
-WORKDIR '/app'
-ARG JAR_FILE=../target/docker-springboot-rest-0.0.1-SNAPSHOT.jar	
-ADD ${JAR_FILE} docker-springboot-rest.jar
-COPY ${JAR_FILE} docker-springboot-rest.jar
-ENTRYPOINT ["java","-jar","/docker-springboot-rest.jar"]
+FROM openjdk:8-jre-alpine
+LABEL maintainer="ginoalex8964@yahoo.com"
+
+ENV APP_ROOT /app
+
+RUN mkdir ${APP_ROOT}
+
+WORKDIR ${APP_ROOT}
+
+COPY target/*.jar ${APP_ROOT}/run.jar
+COPY config ${APP_ROOT}/config/
+
+ENTRYPOINT ["java", "-jar", "run.jar"]
